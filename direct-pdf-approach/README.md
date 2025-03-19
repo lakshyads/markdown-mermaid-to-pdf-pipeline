@@ -54,7 +54,10 @@ The script accepts two arguments:
 - Automatic cleanup of temporary files
 - Hidden temporary directory (`.temp_*`)
 - Progress feedback
-- Error handling
+- Enhanced error handling and troubleshooting
+- Automatic detection of mermaid-cli installation
+- Platform-specific installation instructions
+- PDF file count verification
 - Help documentation
 
 ## How It Works
@@ -62,10 +65,13 @@ The script accepts two arguments:
 The script performs these steps:
 
 1. Creates a hidden temporary directory
-2. Converts Mermaid diagrams to PDFs using mermaid-cli
-3. Generates a preprocessed markdown file with PDF references
-4. Uses Pandoc to create the final PDF
-5. Automatically cleans up all temporary files
+2. Detects and verifies mermaid-cli installation
+3. Converts Mermaid diagrams to PDFs using mermaid-cli
+4. Moves generated PDFs to the temporary directory
+5. Generates a preprocessed markdown file with correct PDF references
+6. Uses Pandoc to create the final PDF
+7. Verifies the number of generated PDFs
+8. Automatically cleans up all temporary files
 
 ## Example Markdown File
 
@@ -86,16 +92,31 @@ Here's a flowchart:
 ## Troubleshooting
 
 1. **If mermaid-cli is not found**
-   - Verify Node.js and npm installation
-   - Try using the full path to mmdc
+   - The script will automatically search for mmdc in:
+     - Global npm installation directory
+     - Node version manager paths (nvm, asdf, nodenv)
+   - If not found, follow the installation instructions:
+     ```bash
+     npm install -g @mermaid-js/mermaid-cli
+     ```
 
 2. **If PDF images are not found**
+   - The script now verifies PDF generation and counts
    - Check the script output for any error messages
    - Verify that the input file exists and is readable
+   - Ensure you have write permissions in the output directory
 
 3. **If pandoc fails**
-   - Verify pandoc installation
-   - Check that you have write permissions in the output directory
+   - The script checks for pandoc installation
+   - Platform-specific installation instructions are provided:
+     - macOS: `brew install pandoc`
+     - Linux: `sudo apt-get install pandoc`
+     - Windows: Download from [pandoc.org](https://pandoc.org/installing.html)
+
+4. **[@zenuml/core] warnings**
+   - These are informational messages from the Mermaid CLI
+   - They don't affect the functionality of the generated PDF
+   - Can be safely ignored
 
 ## Manual Approach
 
