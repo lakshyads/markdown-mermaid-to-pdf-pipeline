@@ -5,39 +5,45 @@ This repository provides two different approaches for converting Markdown files 
 ## Available Approaches
 
 ### 1. [Direct PDF Approach](./direct-pdf-approach/) (Recommended)
-A simple, two-step process using mermaid-cli directly to convert diagrams to PDF format.
+A simple process using mermaid-cli directly to convert diagrams to PDF format, now with a convenient shell script.
 
 **Key Features:**
 - Simpler implementation
 - Better diagram quality (vector-based PDFs)
-- Fewer conversion steps
-- No custom script maintenance
+- Flexible file naming
+- Automatic cleanup
+- Progress feedback
+- Minimal dependencies (no LaTeX required)
 
 ### 2. [Node.js/PNG Approach](./node-png-approach/)
 A custom Node.js script that converts diagrams to PNG format before generating the PDF.
 
 **Key Features:**
-- More detailed progress feedback
+- Detailed progress feedback
 - Automatic cleanup of temporary files
 - Custom output filename support
 - Comprehensive error handling
+- Requires LaTeX for PDF generation
 
 ## Comparison
 
 | Feature | Direct PDF Approach | Node.js/PNG Approach |
 |---------|-------------------|---------------------|
-| Ease of Use | ✅ Simpler, fewer steps | ⚠️ More complex |
+| Ease of Use | ✅ Simple shell script | ⚠️ More complex |
 | Image Quality | ✅ Vector-based PDFs | ⚠️ Raster-based PNGs |
-| Progress Feedback | ⚠️ Basic | ✅ Detailed |
-| Cleanup | ⚠️ Manual | ✅ Automatic |
-| Maintenance | ✅ No custom code | ⚠️ Custom script |
-| Output Naming | ⚠️ Fixed convention | ✅ Flexible |
-| Error Handling | ⚠️ Basic | ✅ Comprehensive |
+| Progress Feedback | ✅ Basic feedback | ✅ Detailed |
+| Cleanup | ✅ Automatic | ✅ Automatic |
+| Maintenance | ✅ Simple script | ⚠️ Custom Node.js code |
+| Output Naming | ✅ Flexible | ✅ Flexible |
+| Error Handling | ✅ Basic with messages | ✅ Comprehensive |
+| Temporary Files | ✅ Hidden directory | ⚠️ Visible directory |
+| Dependencies | ✅ Minimal (no LaTeX) | ⚠️ Requires LaTeX |
 
 ## Prerequisites
 
-Both approaches require the following tools:
+The required tools depend on which approach you choose:
 
+### For Direct PDF Approach (Recommended)
 1. **Node.js and npm**
    ```bash
    # Check if installed
@@ -65,7 +71,8 @@ Both approaches require the following tools:
    # Download from pandoc.org
    ```
 
-4. **LaTeX**
+### Additional Requirements for Node.js/PNG Approach
+4. **LaTeX** (only needed for Node.js/PNG approach)
    ```bash
    # macOS
    brew install --cask mactex
@@ -82,8 +89,7 @@ Both approaches require the following tools:
 ### Using Direct PDF Approach (Recommended)
 ```bash
 cd direct-pdf-approach
-mmdc -i input.md --outputFormat=pdf --pdfFit -o preprocessed.md
-pandoc preprocessed.md -f markdown-implicit_figures -o output.pdf
+./mermaid-to-pdf.sh input.md output.pdf
 ```
 
 ### Using Node.js/PNG Approach
