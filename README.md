@@ -1,131 +1,96 @@
-# Markdown to PDF with Mermaid Converter
+# Markdown to PDF with Mermaid Diagrams
 
-A Node.js script that converts Markdown files containing Mermaid diagrams into PDF documents. The script automatically processes Mermaid diagram code blocks, converts them to images, and includes them in the final PDF output.
+This repository provides two different approaches for converting Markdown files containing Mermaid diagrams into PDF documents. Choose the approach that best suits your needs based on the comparison below.
 
-## Features
+## Available Approaches
 
-- Converts Markdown files to PDF while preserving Mermaid diagrams
-- Automatically processes multiple Mermaid diagrams in a single document
-- Supports custom output filenames
-- Provides detailed progress feedback
-- Cleans up temporary files automatically
-- Handles errors gracefully
+### 1. [Direct PDF Approach](./direct-pdf-approach/) (Recommended)
+A simple, two-step process using mermaid-cli directly to convert diagrams to PDF format.
+
+**Key Features:**
+- Simpler implementation
+- Better diagram quality (vector-based PDFs)
+- Fewer conversion steps
+- No custom script maintenance
+
+### 2. [Node.js/PNG Approach](./node-png-approach/)
+A custom Node.js script that converts diagrams to PNG format before generating the PDF.
+
+**Key Features:**
+- More detailed progress feedback
+- Automatic cleanup of temporary files
+- Custom output filename support
+- Comprehensive error handling
+
+## Comparison
+
+| Feature | Direct PDF Approach | Node.js/PNG Approach |
+|---------|-------------------|---------------------|
+| Ease of Use | ✅ Simpler, fewer steps | ⚠️ More complex |
+| Image Quality | ✅ Vector-based PDFs | ⚠️ Raster-based PNGs |
+| Progress Feedback | ⚠️ Basic | ✅ Detailed |
+| Cleanup | ⚠️ Manual | ✅ Automatic |
+| Maintenance | ✅ No custom code | ⚠️ Custom script |
+| Output Naming | ⚠️ Fixed convention | ✅ Flexible |
+| Error Handling | ⚠️ Basic | ✅ Comprehensive |
 
 ## Prerequisites
 
-Before using this tool, make sure you have the following installed:
+Both approaches require the following tools:
 
-1. **Node.js and npm** - [Download from nodejs.org](https://nodejs.org/)
-
+1. **Node.js and npm**
    ```bash
-   # Verify installation
+   # Check if installed
    node --version
    npm --version
+   
+   # Install via Homebrew if needed
+   brew install node
    ```
 
-2. **Mermaid CLI** - For converting Mermaid diagrams to images
-
+2. **Mermaid CLI**
    ```bash
    npm install -g @mermaid-js/mermaid-cli
    ```
 
-3. **Pandoc** - For converting Markdown to PDF
-   - On macOS (using Homebrew):
-
-     ```bash
-     brew install pandoc
-     ```
-
-   - On Linux:
-
-     ```bash
-     sudo apt-get install pandoc
-     ```
-
-   - On Windows:
-     Download from [pandoc.org](https://pandoc.org/installing.html)
-
-4. **LaTeX** - Required by Pandoc for PDF generation
-   - On macOS:
-
-     ```bash
-     brew install --cask mactex
-     ```
-
-   - On Linux:
-
-     ```bash
-     sudo apt-get install texlive-xetex
-     ```
-
-   - On Windows:
-     Download and install [MiKTeX](https://miktex.org/download)
-
-## Installation
-
-1. Clone this repository or download the script:
-
+3. **Pandoc**
    ```bash
-   git clone https://github.com/yourusername/markdown-mermaid-to-pdf-pipeline.git
-   cd markdown-mermaid-to-pdf-pipeline
+   # macOS
+   brew install pandoc
+   
+   # Linux
+   sudo apt-get install pandoc
+   
+   # Windows
+   # Download from pandoc.org
    ```
 
-## Usage
-
-The script can be used in two ways:
-
-1. **Basic usage** - Output PDF will have the same name as input file:
-
+4. **LaTeX**
    ```bash
-   node mermaid-to-pdf.js input.md
+   # macOS
+   brew install --cask mactex
+   
+   # Linux
+   sudo apt-get install texlive-xetex
+   
+   # Windows
+   # Install MiKTeX
    ```
 
-   This will create `input.pdf` in the same directory.
+## Quick Start
 
-2. **Specify output filename** - Choose your own output filename:
-
-   ```bash
-   node mermaid-to-pdf.js input.md custom-output.pdf
-   ```
-
-### Example Markdown File
-
-Your markdown file should contain Mermaid diagrams in code blocks marked with \`\`\`mermaid:
-
-````markdown
-# My Document
-
-Here's a flowchart:
-
-```mermaid
-graph TD
-    A[Start] --> B{Is it working?}
-    B -- Yes --> C[Great!]
-    B -- No --> D[Debug]
-    D --> B
+### Using Direct PDF Approach (Recommended)
+```bash
+cd direct-pdf-approach
+mmdc -i input.md --outputFormat=pdf --pdfFit -o preprocessed.md
+pandoc preprocessed.md -f markdown-implicit_figures -o output.pdf
 ```
-````
 
-## How It Works
-
-The script performs the following steps:
-
-1. Reads the input Markdown file
-2. Creates a temporary directory for image files
-3. Identifies Mermaid diagram code blocks
-4. Converts each Mermaid diagram to a PNG image
-5. Replaces Mermaid code blocks with image references
-6. Uses Pandoc to convert the processed Markdown to PDF
-7. Cleans up temporary files
-
-## Error Handling
-
-The script includes comprehensive error handling:
-
-- Validates input file existence
-- Provides clear error messages
-- Cleans up temporary files even if an error occurs
-- Shows detailed progress feedback
+### Using Node.js/PNG Approach
+```bash
+cd node-png-approach
+node mermaid-to-pdf.js input.md output.pdf
+```
 
 ## Contributing
 
@@ -133,4 +98,4 @@ Feel free to submit issues and enhancement requests!
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
