@@ -2,6 +2,17 @@
 
 This approach uses mermaid-cli directly to convert Markdown files with Mermaid diagrams into PDF documents. It's a simple, two-step process that generates PDF diagrams directly without intermediate image formats.
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Usage](#usage)
+  - [Examples](#examples)
+  - [Features](#features)
+- [How It Works](#how-it-works)
+- [Example Markdown File](#example-markdown-file)
+- [Troubleshooting](#troubleshooting)
+- [Manual Approach](#manual-approach)
+
 ## Prerequisites
 
 1. **Node.js and npm** - [Download from nodejs.org](https://nodejs.org/)
